@@ -1,6 +1,6 @@
 package com.collections;
 
-import com.sun.net.httpserver.Authenticator;
+
 
 import java.util.*;
 
@@ -12,28 +12,44 @@ public class Main {
         startUp(udemy);
         Scanner sc = new Scanner(System.in);
 
-        while(true)
-        {
-            System.out.println("");
-            System.out.println("1. LOGIN");
-            System.out.println("2. SIGNUP");
-            int check = sc.nextInt();
+        while(true) {
 
-            if(check == 1)
-            {
-                Object obj = login(udemy);
-                if(obj instanceof User )
+            int check = 0;
+
+                try
                 {
-                    userLoggedIn((User)obj,udemy);
+                    System.out.println("");
+                    System.out.println("            1. LOGIN");
+                    System.out.println("            2. SIGNUP");
+                    check = sc.nextInt();
                 }
-                else if(obj instanceof Creator)
+                catch (InputMismatchException e)
                 {
-                    creatorLoggedIn((Creator)obj,udemy);
+                    System.out.println("Enter a Valid option");
+                    sc.nextLine();
+                    continue;
                 }
-            }
-            else
-            {
-                signUp(udemy);
+
+                switch (check) {
+                case 1:
+                {
+                    Object obj = login(udemy);
+                    if (obj instanceof User) {
+                        udemy.loggedInAsUser((User) obj);
+                    } else if (obj instanceof Creator) {
+                        udemy.loggedInAsCreator((Creator) obj);
+                    }
+                }
+                break;
+
+                case 2:
+                {
+                    signUp(udemy);
+                }
+                break;
+
+                default:System.out.println("Enter a Valid option");
+                    break;
             }
         }
 
@@ -54,7 +70,11 @@ public class Main {
                 System.out.println(e);
                 System.out.println("");
             }
-
+            catch (PasswordMismatchException e)
+            {
+                System.out.println(e);
+                System.out.println("");
+            }
         }
     }
 
@@ -78,103 +98,9 @@ public class Main {
         return obj;
     }
 
-    static void userLoggedIn(User user,Udemy udemy)
-    {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("1.Buy a new Course");
-        System.out.println("2.My Courses");
-        System.out.println("3.Wishlist");
-        int check = sc.nextInt();
-
-        if(check == 1) {
-            udemy.printCategories();
-            System.out.println("");
-            System.out.println("Enter a Category");
-
-            int categoryId = sc.nextInt();
-            Category category = udemy.getCategory(categoryId);
-            category.printTopics();
-            System.out.println("");
-            System.out.println("Enter a Topic");
-
-            int topicId = sc.nextInt();
-            Topic topic = category.getTopic(topicId);
-            topic.printCourses();
 
 
-            System.out.print("Enter the CourseName : ");
-            sc.nextLine();
-            String courseName = sc.nextLine();
-            Course selectedCourse = udemy.getCourse(courseName);
-            System.out.println(selectedCourse);
-            System.out.println("");
-            System.out.println("1.Buy Now");
-            System.out.println("2.Add to Wishlist");
-            int check1 = sc.nextInt();
-            if(check1 == 1)
-            {
-                udemy.buyCourse(courseName,user);
-                System.out.println("All the Best ... continue learning");
-            }
-            else
-            {
-                user.addCourseToWishlist(udemy.getCourse(courseName));
-                System.out.println("Course added to wishlist");
-            }
 
-
-        }
-        else if(check == 2)
-        {
-            user.printMycourses();
-        }
-        else
-        {
-            user.printWishlist();
-        }
-
-
-    }
-
-    static void creatorLoggedIn(Creator creator,Udemy udemy)
-    {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("1.View Summary");
-        System.out.println("2.Create a Course");
-        int check = sc.nextInt();
-
-        if(check == 2) {
-            udemy.printCategories();
-            System.out.println("");
-            System.out.println("Enter a Category");
-
-            int categoryId = sc.nextInt();
-            Category category = udemy.getCategory(categoryId);
-            category.printTopics();
-            System.out.println("");
-            System.out.println("Enter a Topic");
-
-            int topicId = sc.nextInt();
-            Topic topic = category.getTopic(topicId);
-
-            System.out.print("Enter your new CourseName : ");
-            sc.nextLine();
-            String courseName = sc.nextLine();
-            udemy.createCourse(categoryId,topicId,creator.getCreatorId(),courseName);
-            topic.printCourses();
-            System.out.println("Course Created Successfully !!!");
-            System.out.println("");
-
-        }
-        else
-        {
-            creator.printCreatedCourses();
-
-
-        }
-
-
-    }
 
     static void startUp(Udemy udemy)
     {

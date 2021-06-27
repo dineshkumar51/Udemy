@@ -12,9 +12,23 @@ public class Category
                 this.topics = new LinkedHashMap<>();
         }
 
+        public String getName() {
+                return name;
+        }
+
+        public void setName(String name) {
+                this.name = name;
+        }
+
+
         public Topic getTopic(int id)
         {
-                return topics.get(id);
+                Topic topic =  topics.get(id);
+                if(topic == null)
+                {
+                        throw new NullPointerException();
+                }
+                return topic;
         }
 
 
@@ -26,20 +40,34 @@ public class Category
 
         public void printTopics()
         {
+                System.out.println("TOPICS");
                 for(Map.Entry m : topics.entrySet()){
-                        System.out.println(m.getKey()+". "+m.getValue());
+                        System.out.println("            "+m.getKey()+". "+m.getValue());
                 }
         }
 
 
-        public String getName() {
-                return name;
+
+        public int hashCode() {
+                return name.hashCode();
         }
 
-        public void setName(String name) {
-                this.name = name;
-        }
+        public boolean equals(Object obj) {
+                if(obj == this)
+                {
+                        return true;
+                }
+                else if(!(obj instanceof Category))
+                {
+                        return false;
+                }
+                else
+                {
+                        Category category = (Category) obj;
 
+                        return category.getName().equals(name);
+                }
+        }
 
         public String toString() {
                 return name;

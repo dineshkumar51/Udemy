@@ -11,7 +11,8 @@ public class User
         private HashMap<String,Course> wishList;
 
 
-        public User(String name, String password, String userId) {
+        public User(String name, String password, String userId)
+        {
                 this.userId = userId;
                 this.name = name;
                 this.password = password;
@@ -35,7 +36,7 @@ public class User
                 this.name = name;
         }
 
-        public void addCourse(Course course)
+        public void addCourseToMyCourses(Course course)
         {
                 myCourses.put(course.getName(),course);
         }
@@ -75,5 +76,33 @@ public class User
 
         public String getPassword() {
                 return password;
+        }
+
+
+        public int hashCode() {
+                return userId.hashCode();
+        }
+
+
+        public boolean equals(Object obj) {
+                if(obj == this)
+                {
+                        return true;
+                }
+                else if(!(obj instanceof User))
+                {
+                        return false;
+                }
+                else
+                {
+                        User user = (User) obj;
+
+                        return user.getUserId().equals(userId) && user.getPassword().equals(password);
+                }
+        }
+
+
+        public String toString() {
+                return name;
         }
 }

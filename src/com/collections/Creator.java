@@ -7,13 +7,13 @@ public class Creator
     private String name;
     private String creatorId;
     private String password;
-    private TreeSet<Course> createdCourses;
+    private LinkedList<Course> createdCourses;
 
     public Creator(String name, String password, String creatorId) {
         this.name = name;
         this.creatorId = creatorId;
         this.password = password;
-        this.createdCourses = new TreeSet<>();
+        this.createdCourses = new LinkedList<>();
     }
 
     public String getName() {
@@ -36,9 +36,54 @@ public class Creator
     }
 
 
+    public String getPassword() {
+        return password;
+    }
+
+
+
     public void addToCreatedCourses(Course course)
     {
-        createdCourses.add(course);
+        createdCourses.addLast(course);
+    }
+
+    public void UpdateCreatedCourses(Course course)
+    {
+        Course firstCourse = createdCourses.getFirst();
+        Course lastCourse = createdCourses.getLast();
+
+        if(course.getRating() >= firstCourse.getRating())
+        {
+            createdCourses.addFirst(course);
+            return;
+        }
+
+        if(course.getRating() <= lastCourse.getRating())
+        {
+            createdCourses.addLast(course);
+            return;
+        }
+
+        ListIterator itr = createdCourses.listIterator();
+
+        while(itr.hasNext())
+        {
+            Course currentCourse = (Course) itr.next();
+            if(currentCourse.getRating() <= course.getRating())
+            {
+                itr.previous();
+                itr.add(course);
+                return;
+            }
+
+        }
+    }
+
+
+    public void removeFromCreatedCourses(Course course)
+    {
+        createdCourses.remove(course);
+
     }
 
     public void printCreatedCourses()
@@ -67,8 +112,28 @@ public class Creator
         }
     }
 
-    public String getPassword() {
-        return password;
+
+
+    public int hashCode() {
+        return creatorId.hashCode();
+    }
+
+
+    public boolean equals(Object obj) {
+        if(obj == this)
+        {
+            return true;
+        }
+        else if(!(obj instanceof Creator))
+        {
+            return false;
+        }
+        else
+        {
+            Creator creator = (Creator) obj;
+
+            return creator.getCreatorId().equals(creatorId) && creator.getPassword().equals(password);
+        }
     }
 
     public String toString() {
