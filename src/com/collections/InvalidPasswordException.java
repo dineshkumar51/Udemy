@@ -1,10 +1,19 @@
 package com.collections;
 
-public class InvalidPasswordException extends Exception{
+public class InvalidPasswordException extends Exception
+{
 
+    public InvalidPasswordException(String string)
+    {
+        super(string);
+    }
 
-
-    public String toString() {
+    public String getMessage() {
         return "Incorrect Password";
+    }
+
+    public String toString()
+    {
+        return super.toString();
     }
 }

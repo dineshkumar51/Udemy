@@ -2,8 +2,20 @@ package com.collections;
 
 public class InvalidNumberException extends Exception
 {
-    public String toString() {
+    public InvalidNumberException(String string)
+    {
+        super(string);
+    }
+
+    public String getMessage() {
         return "Invalid Number";
     }
+
+    public String toString()
+    {
+        return super.toString();
+    }
+
+
 
 }

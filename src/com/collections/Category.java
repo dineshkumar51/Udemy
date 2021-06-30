@@ -5,7 +5,7 @@ import java.util.*;
 public class Category
 {
         private String name;
-        private LinkedHashMap<Integer,Topic> topics;
+        private final LinkedHashMap<Integer,Topic> topics;
 
         public Category(String name) {
                 this.name = name;
@@ -48,10 +48,12 @@ public class Category
 
 
 
+        @Override
         public int hashCode() {
                 return name.hashCode();
         }
 
+        @Override
         public boolean equals(Object obj) {
                 if(obj == this)
                 {
@@ -69,6 +71,7 @@ public class Category
                 }
         }
 
+        @Override
         public String toString() {
                 return name;
         }

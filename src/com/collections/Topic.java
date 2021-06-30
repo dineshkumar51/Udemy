@@ -1,21 +1,20 @@
 package com.collections;
 
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.ListIterator;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Topic
 {
 
     private String name;
-    private LinkedList<Course> courses;
+    private final HashMap<Integer,Course> courses;
 
 
     public Topic(String name) {
         this.name = name;
-        this.courses = new LinkedList<>();
+        this.courses = new HashMap<>();
     }
 
     public String getName() {
@@ -25,7 +24,8 @@ public class Topic
    public Course addCourse(String name,Creator creator,int topicId,int categoryId)
     {
         Course newCourse = new Course(name,creator,topicId,categoryId);
-        courses.add(newCourse);
+        int courseId = newCourse.getCourseId();
+        courses.put(courseId,newCourse);
         return newCourse;
     }
 
@@ -34,68 +34,49 @@ public class Topic
         courses.remove(course);
     }
 
-    public Course addCourse(Course course)
+    public Course addCourse(Course course,int courseId)
     {
-        courses.addLast(course);
+        courses.put(courseId,course);
         return course;
     }
 
-    public void UpdateCourses(Course course)
-    {
-        Course firstCourse = courses.getFirst();
-        Course lastCourse = courses.getLast();
 
-        if(course.getRating() >= firstCourse.getRating())
-        {
-            courses.addFirst(course);
-            return;
-        }
-
-        if(course.getRating() <= lastCourse.getRating())
-        {
-            courses.addLast(course);
-            return;
-        }
-
-        ListIterator itr = courses.listIterator();
-
-        while(itr.hasNext())
-        {
-            Course currentCourse = (Course) itr.next();
-            if(currentCourse.getRating() <= course.getRating())
-            {
-                itr.previous();
-                itr.add(course);
-                return;
-            }
-
-        }
-    }
 
     public void printCourses()
     {
-        Iterator<Course> itr = courses.iterator();
         System.out.println("COURSES");
-        while(itr.hasNext())
+        for(Map.Entry m : courses.entrySet())
         {
-            Course course = itr.next();
+
+            Course course = (Course) m.getValue();
             if(course.getRating() >= 4.5f)
             {
                 System.out.println("        FEATURED COURSE !!!");
+                System.out.println("            "+m.getValue());
             }
-            System.out.println(course);
-            System.out.println("");
+
+        }
+
+        for(Map.Entry m : courses.entrySet())
+        {
+            Course course = (Course) m.getValue();
+            if(course.getRating() < 4.5f)
+            {
+                System.out.println("            "+m.getValue());
+            }
         }
 
     }
 
 
 
+    @Override
     public int hashCode() {
         return name.hashCode();
     }
 
 
+    @Override
     public boolean equals(Object obj) {
         if(obj == this)
         {
@@ -114,6 +95,7 @@ public class Topic
     }
 
 
+    @Override
     public String toString() {
         return name;
     }

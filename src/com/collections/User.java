@@ -2,13 +2,13 @@ package com.collections;
 
 import java.util.*;
 
-public class User
+public class User extends Client
 {
         private String userId;
         private String name;
         private String password;
-        private HashMap<String,Course> myCourses;
-        private HashMap<String,Course> wishList;
+        private final HashMap<String,Course> myCourses;
+        private final HashMap<String,Course> wishList;
 
 
         public User(String name, String password, String userId)
@@ -43,7 +43,7 @@ public class User
 
         public void addCourseToWishlist(Course course)
         {
-                myCourses.put(course.getName(),course);
+                wishList.put(course.getName(),course);
         }
 
         public void printMycourses()
@@ -66,7 +66,7 @@ public class User
        {
                if(!oldPassword.equals(this.password))
                {
-                        throw new InvalidPasswordException();
+                        throw new InvalidPasswordException("Incorrect Password");
                }
                else
                {
@@ -79,11 +79,13 @@ public class User
         }
 
 
+        @Override
         public int hashCode() {
                 return userId.hashCode();
         }
 
 
+        @Override
         public boolean equals(Object obj) {
                 if(obj == this)
                 {
@@ -102,6 +104,7 @@ public class User
         }
 
 
+        @Override
         public String toString() {
                 return name;
         }

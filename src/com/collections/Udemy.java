@@ -4,11 +4,11 @@ import java.util.*;
 
 public class Udemy
 {
-        private HashMap<String,User> users;
-        private HashMap<String,Creator> instructors;
-        private HashMap<String,Course> allCourses;
-        private HashMap<Integer,Category> categories;
-        private HashMap<String,String> instructorNames;
+        private final HashMap<String,User> users;
+        private final HashMap<String,Creator> instructors;
+        private final HashMap<String,Course> allCourses;
+        private final HashMap<Integer,Category> categories;
+        private final HashMap<String,String> instructorNames;
 
 
         public Udemy() {
@@ -19,7 +19,7 @@ public class Udemy
                 instructorNames = new HashMap<>();
         }
 
-        public Object login() throws InvalidUserIdOrPasswordException
+        public Client login() throws InvalidUserIdOrPasswordException
         {
                 Scanner sc = new Scanner(System.in);
                 int loginOption;
@@ -64,8 +64,8 @@ public class Udemy
                                                 return users.get(userId);
                                         }
                                 }
-                                //sc.close();
-                                throw new InvalidUserIdOrPasswordException();
+
+                                throw new InvalidUserIdOrPasswordException("Incorrect UserId or Password");
 
                         }
 
@@ -82,15 +82,14 @@ public class Udemy
                                                 return instructors.get(creatorId);
                                         }
                                 }
-                                //sc.close();
-                                throw new InvalidUserIdOrPasswordException();
+                                throw new InvalidUserIdOrPasswordException("Incorrect UserId or Password");
                         }
 
                         default: System.out.println("Enter a Valid option");
                         break;
 
                 }
-                return new Object();
+                return null;
 
         }
 
@@ -137,7 +136,7 @@ public class Udemy
 
                                 if(! password.equals(confirmPassword))
                                 {
-                                        throw new PasswordMismatchException();
+                                        throw new PasswordMismatchException("Confirm password failed .... try again");
                                 }
 
                                 if (!users.containsKey(userId)) {
@@ -146,7 +145,7 @@ public class Udemy
                                         System.out.println("Account Created Successfully");
                                 } else {
                                         //sc.close();
-                                        throw new UserIdAlreadyExistException();
+                                        throw new UserIdAlreadyExistException("UserId already exists");
                                 }
 
                         }
@@ -166,7 +165,7 @@ public class Udemy
 
                                 if(! password.equals(confirmPassword))
                                 {
-                                        throw new PasswordMismatchException();
+                                        throw new PasswordMismatchException("Confirm password failed .... try again");
                                 }
 
 
@@ -177,8 +176,8 @@ public class Udemy
                                         System.out.println("Account Created Successfully");
 
                                 } else {
-                                        //sc.close();
-                                        throw new UserIdAlreadyExistException();
+
+                                        throw new UserIdAlreadyExistException("UserId already exists");
                                 }
 
 
@@ -406,13 +405,14 @@ public class Udemy
                                 case 2:
                                 {
                                         user.printMycourses();
+
                                 }
                                 break;
 
 
-                                case 3:
-                                {
+                                case 3: {
                                         user.printWishlist();
+
                                 }
                                 break;
 
@@ -449,16 +449,10 @@ public class Udemy
 
                                         }
                                         float rating;
-                                        Topic topic;
-                                        Creator creator;
                                         while(true)
                                         {
                                                 try
                                                 {
-                                                        topic = categories.get(course.getCategoryId()).getTopic(course.getTopicId());
-                                                        topic.removeCourse(course);
-                                                        creator = course.getCreator();
-                                                        creator.removeFromCreatedCourses(course);
                                                         System.out.print("Provide your rating (1--5) : ");
                                                         rating = (float)sc.nextFloat();
                                                         course.setRating(rating);
@@ -477,10 +471,6 @@ public class Udemy
                                                 }
 
                                         }
-
-
-                                        creator.UpdateCreatedCourses(course);
-                                        topic.UpdateCourses(course);
 
                                 }
                                 break;
@@ -505,9 +495,10 @@ public class Udemy
                 {
                         Scanner sc = new Scanner(System.in);
                         System.out.println("");
-                        System.out.println("1.create a Course");
-                        System.out.println("2.View Summary");
-                        System.out.println("3.Log Out");
+                        System.out.println("HOME PAGE");
+                        System.out.println("            1.create a Course");
+                        System.out.println("            2.View Summary");
+                        System.out.println("            3.Log Out");
                         int homePageOption;
                         try
                         {
@@ -656,6 +647,7 @@ public class Udemy
                 }
         }
 
+
         public void printInstructors()
         {
                 System.out.println("INSTRUCTORS");
@@ -672,10 +664,12 @@ public class Udemy
         {
                 Creator creator = getCreator(creatorId);
                 Course newCourse = getCategory(categoryId).getTopic(topicId).addCourse(name,creator,topicId,categoryId);
+                int courseId = newCourse.getCourseId();
                 allCourses.put(name, newCourse);
-                creator.addToCreatedCourses(newCourse);
+                creator.addToCreatedCourses(newCourse,courseId);
 
         }
+
 
         public void buyCourse(String courseName,User user)
         {

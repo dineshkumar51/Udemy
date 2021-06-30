@@ -33,11 +33,11 @@ public class Main {
                 switch (check) {
                 case 1:
                 {
-                    Object obj = login(udemy);
-                    if (obj instanceof User) {
-                        udemy.loggedInAsUser((User) obj);
-                    } else if (obj instanceof Creator) {
-                        udemy.loggedInAsCreator((Creator) obj);
+                    Client client = (Client) login(udemy);
+                    if (client instanceof User) {
+                        udemy.loggedInAsUser((User) client);
+                    } else if (client instanceof Creator) {
+                        udemy.loggedInAsCreator((Creator) client);
                     }
                 }
                 break;

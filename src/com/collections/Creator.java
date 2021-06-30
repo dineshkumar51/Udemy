@@ -2,18 +2,18 @@ package com.collections;
 
 import java.util.*;
 
-public class Creator
+public class Creator extends Client
 {
     private String name;
     private String creatorId;
     private String password;
-    private LinkedList<Course> createdCourses;
+    private final HashMap<Integer,Course> createdCourses;
 
     public Creator(String name, String password, String creatorId) {
         this.name = name;
         this.creatorId = creatorId;
         this.password = password;
-        this.createdCourses = new LinkedList<>();
+        this.createdCourses = new HashMap<>();
     }
 
     public String getName() {
@@ -42,42 +42,12 @@ public class Creator
 
 
 
-    public void addToCreatedCourses(Course course)
+    public void addToCreatedCourses(Course course,int courseId)
     {
-        createdCourses.addLast(course);
+        createdCourses.put(courseId,course);
     }
 
-    public void UpdateCreatedCourses(Course course)
-    {
-        Course firstCourse = createdCourses.getFirst();
-        Course lastCourse = createdCourses.getLast();
 
-        if(course.getRating() >= firstCourse.getRating())
-        {
-            createdCourses.addFirst(course);
-            return;
-        }
-
-        if(course.getRating() <= lastCourse.getRating())
-        {
-            createdCourses.addLast(course);
-            return;
-        }
-
-        ListIterator itr = createdCourses.listIterator();
-
-        while(itr.hasNext())
-        {
-            Course currentCourse = (Course) itr.next();
-            if(currentCourse.getRating() <= course.getRating())
-            {
-                itr.previous();
-                itr.add(course);
-                return;
-            }
-
-        }
-    }
 
 
     public void removeFromCreatedCourses(Course course)
@@ -88,14 +58,29 @@ public class Creator
 
     public void printCreatedCourses()
     {
-        Iterator<Course> itr = createdCourses.iterator();
-
-        while(itr.hasNext())
+        System.out.println("COURSES");
+        for(Map.Entry m : createdCourses.entrySet())
         {
-            System.out.println(itr.next());
-            System.out.println("");
+
+            Course course = (Course) m.getValue();
+            if(course.getRating() >= 4.5f)
+            {
+                System.out.println("        FEATURED COURSE !!!");
+                System.out.println("            "+m.getValue());
+            }
+
         }
-        System.out.println("");
+
+        for(Map.Entry m : createdCourses.entrySet())
+        {
+            Course course = (Course) m.getValue();
+            if(course.getRating() < 4.5f)
+            {
+                System.out.println("            "+m.getValue());
+            }
+        }
+
+
 
     }
 
@@ -104,7 +89,7 @@ public class Creator
     {
         if(!oldPassword.equals(this.password))
         {
-            throw new InvalidPasswordException();
+            throw new InvalidPasswordException("Incorrect Password");
         }
         else
         {
@@ -114,11 +99,13 @@ public class Creator
 
 
 
+    @Override
     public int hashCode() {
         return creatorId.hashCode();
     }
 
 
+    @Override
     public boolean equals(Object obj) {
         if(obj == this)
         {
@@ -136,6 +123,7 @@ public class Creator
         }
     }
 
+    @Override
     public String toString() {
         return name;
     }

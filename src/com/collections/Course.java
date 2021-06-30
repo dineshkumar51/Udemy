@@ -2,6 +2,7 @@ package com.collections;
 
 public class Course implements Comparable
 {
+        private int courseId;
         private String name;
         private Creator creator;
         private int categoryId;
@@ -9,6 +10,7 @@ public class Course implements Comparable
         private float rating;
         private int noOfRatings;
         private int numberOfUsers;
+        private static int totalNoOfCourses;
 
 
         public Course(String name, Creator creator,int topicId,int categoryId) {
@@ -19,6 +21,7 @@ public class Course implements Comparable
                 this.numberOfUsers = 0;
                 this.topicId = topicId;
                 this.categoryId = categoryId;
+                this.courseId = ++totalNoOfCourses;
         }
 
 
@@ -53,7 +56,7 @@ public class Course implements Comparable
         {
                 if(rating<0.0f || rating>5.0f)
                 {
-                        throw new InvalidNumberException();
+                        throw new InvalidNumberException("Invalid Number");
                 }
                 this.rating = ((this.rating * noOfRatings)+rating)/++noOfRatings;
         }
@@ -93,11 +96,13 @@ public class Course implements Comparable
 
 
 
+        @Override
        public int hashCode() {
                 return name.hashCode();
         }
 
 
+        @Override
        public boolean equals(Object obj)
         {
                 if(obj == this)
@@ -117,6 +122,7 @@ public class Course implements Comparable
         }
 
 
+        @Override
         public String toString() {
 
                 if(rating == 0.0f)
@@ -134,6 +140,7 @@ public class Course implements Comparable
         }
 
 
+        @Override
         public int compareTo(Object o) {
 
                 Course course = (Course) o;
@@ -154,5 +161,10 @@ public class Course implements Comparable
                 }
 
         }
+
+        public int getCourseId() {
+                return courseId;
+        }
+
 
 }
