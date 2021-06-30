@@ -1,4 +1,4 @@
-package com.collections;
+package com.collections.exceptions;
 
 public class InvalidUserIdOrPasswordException extends Exception
 {
