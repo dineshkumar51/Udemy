@@ -2,6 +2,7 @@ package com.collections;
 
 public class Course implements Comparable
 {
+
         private int courseId;
         private String name;
         private Creator creator;

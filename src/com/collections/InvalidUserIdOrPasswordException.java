@@ -2,6 +2,7 @@ package com.collections;
 
 public class InvalidUserIdOrPasswordException extends Exception
 {
+
     public InvalidUserIdOrPasswordException(String string)
     {
         super(string);

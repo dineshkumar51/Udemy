@@ -1,6 +1,7 @@
 package com.collections;
 
 public abstract class Client
+
 {
     abstract  public String getName();
     abstract  public void setName(String name);

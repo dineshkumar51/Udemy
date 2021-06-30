@@ -68,6 +68,7 @@ public class User extends Client
                {
                         throw new InvalidPasswordException("Incorrect Password");
                }
+
                else
                {
                        this.password = newPassword;

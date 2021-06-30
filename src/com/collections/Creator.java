@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Creator extends Client
 {
+
     private String name;
     private String creatorId;
     private String password;

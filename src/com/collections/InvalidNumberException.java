@@ -7,6 +7,7 @@ public class InvalidNumberException extends Exception
         super(string);
     }
 
+
     public String getMessage() {
         return "Invalid Number";
     }

@@ -3,6 +3,7 @@ package com.collections;
 import java.util.*;
 
 public class Udemy
+
 {
         private final HashMap<String,User> users;
         private final HashMap<String,Creator> instructors;
