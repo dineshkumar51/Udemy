@@ -1,8 +1,9 @@
 package com.collections;
+import com.collections.exceptions.*;
 
 import java.util.*;
 
-public class Creator extends Client
+public class Creator extends User
 {
 
     private String name;

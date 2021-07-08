@@ -1,11 +1,14 @@
 package com.collections;
 
+import com.collections.exceptions.*;
+
+
 import java.util.*;
 
 public class Udemy
 
 {
-        private final HashMap<String,User> users;
+        private final HashMap<String, Learner> users;
         private final HashMap<String,Creator> instructors;
         private final HashMap<String,Course> allCourses;
         private final HashMap<Integer,Category> categories;
@@ -20,7 +23,7 @@ public class Udemy
                 instructorNames = new HashMap<>();
         }
 
-        public Client login() throws InvalidUserIdOrPasswordException
+        public User login() throws InvalidUserIdOrPasswordException
         {
                 Scanner sc = new Scanner(System.in);
                 int loginOption;
@@ -141,8 +144,8 @@ public class Udemy
                                 }
 
                                 if (!users.containsKey(userId)) {
-                                        User newUser = new User(name, password, userId);
-                                        users.put(userId, newUser);
+                                        Learner newLearner = new Learner(name, password, userId);
+                                        users.put(userId, newLearner);
                                         System.out.println("Account Created Successfully");
                                 } else {
                                         //sc.close();
@@ -192,7 +195,7 @@ public class Udemy
                 }
         }
 
-        public void loggedInAsUser(User user) {
+        public void loggedInAsUser(Learner learner) {
 
                 boolean flag = true;
                 while(flag)
@@ -312,11 +315,11 @@ public class Udemy
                                                         System.out.println("2.Add to Wishlist");
                                                         int courseOption = sc.nextInt();
                                                         if (courseOption == 1) {
-                                                                buyCourse(courseName, user);
+                                                                buyCourse(courseName, learner);
                                                                 System.out.println("All the Best ... continue learning");
                                                                 break;
                                                         } else if (courseOption == 2) {
-                                                                user.addCourseToWishlist(getCourse(courseName));
+                                                                learner.addCourseToWishlist(getCourse(courseName));
                                                                 System.out.println("Course added to wishlist");
                                                                 break;
                                                         } else {
@@ -381,11 +384,11 @@ public class Udemy
                                                         System.out.println("2.Add to Wishlist");
                                                         int courseOption = sc.nextInt();
                                                         if (courseOption == 1) {
-                                                                buyCourse(courseName, user);
+                                                                buyCourse(courseName, learner);
                                                                 System.out.println("All the Best ... continue learning");
                                                                 break;
                                                         } else if (courseOption == 2) {
-                                                                user.addCourseToWishlist(getCourse(courseName));
+                                                                learner.addCourseToWishlist(getCourse(courseName));
                                                                 System.out.println("Course added to wishlist");
                                                                 break;
                                                         } else {
@@ -405,14 +408,14 @@ public class Udemy
 
                                 case 2:
                                 {
-                                        user.printMycourses();
+                                        learner.printMycourses();
 
                                 }
                                 break;
 
 
                                 case 3: {
-                                        user.printWishlist();
+                                        learner.printWishlist();
 
                                 }
                                 break;
@@ -425,7 +428,7 @@ public class Udemy
                                         {
                                                 try
                                                 {
-                                                        user.printMycourses();
+                                                        learner.printMycourses();
                                                         System.out.print("Enter a Course Name : ");
                                                         sc.nextLine();
                                                         courseName = sc.nextLine();
@@ -461,9 +464,10 @@ public class Udemy
                                                 }
                                                 catch (InvalidNumberException e)
                                                 {
-                                                        System.out.println("Kindly provide  rating only between (1--5)");
+                                                        System.out.println("Kindly Enter a valid option");
                                                         System.out.println("");
                                                 }
+
                                                 catch (InputMismatchException e)
                                                 {
                                                         System.out.println("Kindly Enter a valid option");
@@ -672,19 +676,19 @@ public class Udemy
         }
 
 
-        public void buyCourse(String courseName,User user)
+        public void buyCourse(String courseName, Learner learner)
         {
                 Course newCourse = allCourses.get(courseName);
                 newCourse.incrementNumberOfUsers();
-                user.addCourseToMyCourses(newCourse);
+                learner.addCourseToMyCourses(newCourse);
         }
 
 
 
         public void test()
         {
-                users.put("dinesh123",new User("Dinesh","qwer","dinesh123"));
-                users.put("ram123",new User("Ram","ram123","ram123"));
+                users.put("dinesh123",new Learner("Dinesh","qwer","dinesh123"));
+                users.put("ram123",new Learner("Ram","ram123","ram123"));
                 instructors.put("kumar123",new Creator("kumar","5151","kumar123"));
                 instructorNames.put("kumar","kumar123");
         }

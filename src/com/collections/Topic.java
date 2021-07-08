@@ -3,6 +3,8 @@ package com.collections;
 
 import java.util.HashMap;
 import java.util.Map;
+import com.collections.exceptions.*;
+
 
 
 public class Topic

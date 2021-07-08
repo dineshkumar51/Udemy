@@ -1,4 +1,5 @@
 package com.collections;
+import com.collections.exceptions.*;
 
 public class Course implements Comparable
 {

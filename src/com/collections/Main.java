@@ -2,6 +2,9 @@ package com.collections;
 
 
 
+import com.collections.exceptions.*;
+
+
 import java.util.*;
 
 
@@ -35,11 +38,11 @@ public class Main {
                 switch (check) {
                 case 1:
                 {
-                    Client client = (Client) login(udemy);
-                    if (client instanceof User) {
-                        udemy.loggedInAsUser((User) client);
-                    } else if (client instanceof Creator) {
-                        udemy.loggedInAsCreator((Creator) client);
+                    User user = (User) login(udemy);
+                    if (user instanceof Learner) {
+                        udemy.loggedInAsUser((Learner) user);
+                    } else if (user instanceof Creator) {
+                        udemy.loggedInAsCreator((Creator) user);
                     }
                 }
                 break;
