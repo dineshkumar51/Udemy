@@ -1,18 +1,17 @@
-package com.collections;
+package com.collections.udemy;
 
 
 import java.util.HashMap;
 import java.util.Map;
-import com.collections.exceptions.*;
-
+import com.collections.users.Creator;
 
 
 public class Topic
 
 {
 
-    private String name;
-    private final HashMap<Integer,Course> courses;
+    private final String name;
+    private final HashMap<Integer, Course> courses;
 
 
     public Topic(String name) {
@@ -24,10 +23,10 @@ public class Topic
         return name;
     }
 
-   public Course addCourse(String name,Creator creator,int topicId,int categoryId)
+   public Course addCourse(String name, Creator creator, int topicId, int categoryId)
     {
         Course newCourse = new Course(name,creator,topicId,categoryId);
-        int courseId = newCourse.getCourseId();
+        int courseId = newCourse.getId();
         courses.put(courseId,newCourse);
         return newCourse;
     }
@@ -55,19 +54,21 @@ public class Topic
             if(course.getRating() >= 4.5f)
             {
                 System.out.println("        FEATURED COURSE !!!");
-                System.out.println("            "+m.getValue());
+                System.out.println(m.getValue());
+                System.out.println();
             }
 
         }
 
-        for(Map.Entry m : courses.entrySet())
+        courses.forEach((key, value) ->
         {
-            Course course = (Course) m.getValue();
-            if(course.getRating() < 4.5f)
+            Course course = (Course) value;
+            if (course.getRating() < 4.5f)
             {
-                System.out.println("            "+m.getValue());
+                System.out.println(value);
+                System.out.println();
             }
-        }
+        });
 
     }
 

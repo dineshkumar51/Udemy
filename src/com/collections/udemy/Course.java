@@ -1,10 +1,12 @@
-package com.collections;
-import com.collections.exceptions.*;
+package com.collections.udemy;
 
-public class Course implements Comparable
+import com.collections.exceptions.InvalidNumberException;
+import com.collections.users.Creator;
+
+public class Course
 {
 
-        private int courseId;
+        private final int Id;
         private String name;
         private Creator creator;
         private int categoryId;
@@ -23,9 +25,8 @@ public class Course implements Comparable
                 this.numberOfUsers = 0;
                 this.topicId = topicId;
                 this.categoryId = categoryId;
-                this.courseId = ++totalNoOfCourses;
+                this.Id = ++totalNoOfCourses;
         }
-
 
 
         public String getName()
@@ -68,13 +69,10 @@ public class Course implements Comparable
                 return numberOfUsers;
         }
 
-
         public void incrementNumberOfUsers()
         {
                 this.numberOfUsers++;
         }
-
-
 
         public int getCategoryId()
         {
@@ -96,13 +94,10 @@ public class Course implements Comparable
                 this.topicId = topicId;
         }
 
-
-
         @Override
-       public int hashCode() {
+        public int hashCode() {
                 return name.hashCode();
         }
-
 
         @Override
        public boolean equals(Object obj)
@@ -111,30 +106,27 @@ public class Course implements Comparable
                 {
                         return true;
                 }
-                else if(!(obj instanceof Course))
+                else if(!(obj instanceof Course course))
                 {
                         return false;
                 }
                 else
                 {
-                        Course course = (Course) obj;
-
                         return course.getName().equals(name);
                 }
         }
-
 
         @Override
         public String toString() {
 
                 if(rating == 0.0f)
                 {
-                        return String.format("\t\t"+name + "\n\t\t"+"Instructor : "+creator.toString() + "\n\t\t" +"No of Students : " + numberOfUsers+"\n\t\t"+"Rating : Not yet rated");
+                        return "\t\t"+"ID : "+Id+"\n\t\t"+name + "\n\t\t"+"Instructor : "+creator.toString() + "\n\t\t" +"No of Students : " + numberOfUsers+"\n\t\t"+"Rating : Not yet rated";
                 }
                 else
                 {
                         String formattedRating = String.format("%.1f",rating);
-                        return String.format("\t\t"+name + "\n\t\t"+"Instructor : "+creator.toString() + "\n\t\t" +"No of Students : " + numberOfUsers+"\n\t\t"+"Rating : " + formattedRating);
+                        return "\t\t"+"ID : "+Id+"\n\t\t"+name + "\n\t\t"+"Instructor : "+creator.toString() + "\n\t\t" +"No of Students : " + numberOfUsers+"\n\t\t"+"Rating : " + formattedRating;
 
                 }
 
@@ -142,30 +134,8 @@ public class Course implements Comparable
         }
 
 
-        @Override
-        public int compareTo(Object o) {
-
-                Course course = (Course) o;
-
-
-
-                if(course.getRating() > rating)
-                {
-                        return 1;
-                }
-                else if(course.getRating() > rating)
-                {
-                        return -1;
-                }
-                else
-                {
-                        return 0;
-                }
-
-        }
-
-        public int getCourseId() {
-                return courseId;
+        public int getId() {
+                return Id;
         }
 
 

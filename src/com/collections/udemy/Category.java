@@ -1,12 +1,13 @@
-package com.collections;
+package com.collections.udemy;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 
 public class Category
 {
         private String name;
-        private final LinkedHashMap<Integer,Topic> topics;
+        private final LinkedHashMap<Integer, Topic> topics;
 
         public Category(String name) {
                 this.name = name;

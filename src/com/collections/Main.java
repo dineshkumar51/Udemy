@@ -1,12 +1,12 @@
 package com.collections;
 
-
-
-import com.collections.exceptions.*;
-
-
-import java.util.*;
-
+import com.collections.exceptions.InvalidUserIdOrPasswordException;
+import com.collections.exceptions.PasswordMismatchException;
+import com.collections.exceptions.UserIdAlreadyExistException;
+import com.collections.udemy.Udemy;
+import com.collections.users.*;
+import java.util.Scanner;
+import java.util.InputMismatchException;
 
 
 public class Main {
@@ -14,7 +14,7 @@ public class Main {
     public static void main(String[] args) {
 
         Udemy udemy = new Udemy();
-        startUp(udemy);
+        udemy.startUp();
         Scanner sc = new Scanner(System.in);
 
         while(true) {
@@ -23,7 +23,7 @@ public class Main {
 
                 try
                 {
-                    System.out.println("");
+                    System.out.println();
                     System.out.println("            1. LOGIN");
                     System.out.println("            2. SIGNUP");
                     check = sc.nextInt();
@@ -35,33 +35,24 @@ public class Main {
                     continue;
                 }
 
-                switch (check) {
-                case 1:
-                {
-                    User user = (User) login(udemy);
-                    if (user instanceof Learner) {
-                        udemy.loggedInAsUser((Learner) user);
-                    } else if (user instanceof Creator) {
-                        udemy.loggedInAsCreator((Creator) user);
-                    }
+            if (check == 1) {
+                User user = (User) login(udemy);
+                if (user instanceof Learner) {
+                    udemy.loggedInAsUser((Learner) user);
+                } else if (user instanceof Creator) {
+                    udemy.loggedInAsCreator((Creator) user);
                 }
-                break;
-
-                case 2:
-                {
-                    signUp(udemy);
-                }
-                break;
-
-                default:System.out.println("Enter a Valid option");
-                    break;
+            } else if (check == 2) {
+                signUp(udemy);
+            } else {
+                System.out.println("Enter a Valid option");
             }
         }
 
 
     }
 
-    static void signUp(Udemy udemy)
+    private static void signUp(Udemy udemy)
     {
         int flag = 0;
         while(flag < 1)
@@ -73,17 +64,17 @@ public class Main {
             catch(UserIdAlreadyExistException e)
             {
                 System.out.println(e);
-                System.out.println("");
+                System.out.println();
             }
             catch (PasswordMismatchException e)
             {
                 System.out.println(e);
-                System.out.println("");
+                System.out.println();
             }
         }
     }
 
-    static Object login(Udemy udemy)
+    private static Object login(Udemy udemy)
     {
         int flag = 0;
         Object obj = null;
@@ -96,43 +87,11 @@ public class Main {
             catch(InvalidUserIdOrPasswordException e)
             {
                 System.out.println(e);
-                System.out.println("");
+                System.out.println();
             }
 
         }
         return obj;
-    }
-
-
-
-
-
-    static void startUp(Udemy udemy)
-    {
-        udemy.test();
-        udemy.addCategory(1,"Development");
-        udemy.addCategory(2,"Business");
-        udemy.addCategory(3,"IT & Software");
-        udemy.addCategory(4,"Marketing");
-
-        udemy.getCategory(1).addTopic(1,"Web Development");
-        udemy.getCategory(1).addTopic(2,"Data Science");
-
-        udemy.getCategory(2).addTopic(1,"Management");
-        udemy.getCategory(2).addTopic(2,"Sales");
-
-        udemy.createCourse(1,1,"kumar123","Web Development Bootcamp");
-        udemy.createCourse(1,1,"kumar123","The Complete JavaScript");
-        udemy.createCourse(1,1,"kumar123","React - The Complete Guide");
-
-        udemy.createCourse(1,2,"kumar123","Python for Datascience");
-        udemy.createCourse(1,2,"kumar123","Machine Learning A-Z");
-        udemy.createCourse(1,2,"kumar123","Deep Learning A-Z");
-
-
-
-
-
     }
 
 }
